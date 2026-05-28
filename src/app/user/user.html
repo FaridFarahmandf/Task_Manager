@@ -1,0 +1,40 @@
+<div class="container">
+  @if (users()) {
+  <div class="row">
+    @for (user of users(); track $index) {
+    <div class="col-lg-4  col-md-6 col-sm-12 mt-4">
+      <div class="card">
+        <div class="card-body">
+          <p>Name: {{user.name}}</p>
+          <p>Email: {{user.email}}</p>
+          <p>Username: {{user.username}}</p>
+          <p>Country: {{user.country}}</p>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  }
+  @if(isFetching() && !error()) {
+  <div class="row">
+    <div class="col-lg-12 mt-4">
+      <div class="card">
+        <div class="card-body">
+          Fetching data....
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+  @if(error()) {
+  <div class="row">
+    <div class="col-lg-12 mt-4">
+      <div class="card">
+        <div class="card-body">
+          {{error()}}
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>

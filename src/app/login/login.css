@@ -1,0 +1,26 @@
+.main-card {
+    background-color: #3498db;
+    width: 30%;
+    margin:auto;
+    margin-top: 100px;
+    color: #ecf0f1;
+    border-radius: 20px;
+}
+.form-group{
+    width: 85%;
+    margin: auto;
+}
+.register a{
+    text-decoration: underline;
+    color: #ecf0f1;
+}
+.error-control {
+    width: 85%;
+    margin: auto;
+}
+.form-group:has(.ng-pristine.ng-invalid.ng-touched) label {
+    color: #e74c3c;
+}
+input.ng-pristine.ng-invalid.ng-touched {
+    border: 1px solid #e74c3c;
+}

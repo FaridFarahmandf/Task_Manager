@@ -1,0 +1,98 @@
+<div class="card main-card">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="container">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="form-group mt-3">
+          <label for="email">Email</label>
+          <input class="form-control" name="email" type="email" formControlName="email">
+        </div>
+        @if (getEmailError) {
+        <p class="input-error">Please enter the valid email</p>
+        }
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="form-group mt-3">
+          <label for="username">Username</label>
+          <input class="form-control" name="username" type="text" formControlName="username">
+        </div>
+        @if (getUsernameError) {
+        <p class="input-error">Please enter the valid username</p>
+        }
+      </div>
+    </div>
+
+
+    <div class="row" formGroupName="passwords">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="form-group mt-3">
+          <label for="password">Password</label>
+          <input class="form-control" type="password" name="password" formControlName="password">
+        </div>
+        @if (getPasswordError) {
+        <p class="input-error">Please enter the valid password. (Password must be at least 6 characters.)</p>
+        @if (questionMarkError) {
+        <p class="input-error">Does not contain Question mark "?"</p>
+        }
+        }
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="form-group mt-3">
+          <label for="confirmPassword">Re-Enter Password</label>
+          <input class="form-control" type="password" name="confirmPassword" formControlName="confirmPassword">
+        </div>
+        @if (getConfirmPasswordError) {
+        <p class="input-error">Please enter the valid password. (Password must be at least 6 characters.)</p>
+        }
+        @if (form.controls.passwords.invalid && form.controls.passwords.controls.confirmPassword.valid) {
+            <p class="input-error">Passwords do not match</p>
+        }
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input class="form-control" name="name" type="text" [formControl]="form.controls.name">
+          @if (getNameError) {
+          <p class="input-error">Please enter the valid name</p>
+          }
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="form-group">
+          <label for="country">Country</label>
+          <input class="form-control" name="country" type="text" [formControl]="form.controls.country">
+          @if (getCountryError) {
+          <p class="input-error">Please enter the valid country</p>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="form-group">
+          <label for="role">Role</label>
+          <select class="form-select" id="role" aria-label="choose" [formControl]="form.controls.role">
+            @for (role of roles; track role.id) {
+            <option [value]="role.id">{{role.name}}</option>
+            }
+          </select>
+          @if (getRoleError) {
+          <p class="input-error">Please select the Role</p>
+          }
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="form-group mt-3 mb-2">
+      <button class="btn btn-light">Create</button>
+    </div>
+  </form>
+</div>
