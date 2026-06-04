@@ -43,8 +43,11 @@ export class Login {
   login(formData:NgForm) {
     
     this.userService.login(formData, "/login").subscribe({
-      next: () => {
-        this.router.navigate(["dashboard"])
+      next: (val:any) => {
+        console.log(val);
+        window.localStorage.setItem("access_token", val.access_token)
+        window.localStorage.setItem("refresh_token", val.refresh_token)
+        this.router.navigate(["tasks"])
         this.form().reset();
       }
     })

@@ -1,0 +1,75 @@
+<div class="container-fluid">
+  <div class="card mt-3 p-3">
+    <form [formGroup]="form" ngForm="form" (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input name="title" type="text" id="title" class="form-control" formControlName="title">
+          </div>
+        </div>
+        <div class="col-12 mt-3">
+          <div class="form-group">
+            <label for="description">Description</label>
+            <input name="description" type="text" id="description" class="form-control" formControlName="description">
+          </div>
+        </div>
+        <div class="col-12 mt-3">
+          <div class="form-group">
+            <label for="priority">Priority</label>
+            <select name="priority" id="priority" class="form-control" formControlName="priority">
+              <option value="low" selected>Low</option>
+              <option value="medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-12 mt-3">
+          <div class="form-group">
+            <label for="status">Status</label>
+            <select name="status" id="status" class="form-control" formControlName="status">
+              <option value="todo" selected>Todo</option>
+              <option value="inprogress">In Progress</option>
+              <option value="inreview">In Review</option>
+              <option value="done">Done</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-12 mt-3">
+          <div class="form-group">
+            <label for="assigned_users">Assigned Users:</label>
+            <div class="dropdown">
+              <button class="btn btn-primary dropdown-toggle" type="button" (click)="toggleDropdown()">
+                Select Users
+              </button>
+              <ul class="dropdown-menu" [class.show]="dropdownOpen">
+                @if(!usersLoaded()){
+                <li class="dropdown-item">Loading...</li>
+                }
+                @else {
+                @for (user of users(); track user.id) {
+                <li class="dropdown-item">
+                  <input type="checkbox" class="form-check-input" [checked]="isChecked(user.id)"
+                    (click)="toggleUser(user)">
+                  {{user.name}}
+                </li>
+                }
+                }
+              </ul>
+              <div>
+                <ul>
+                  @for (user of assignedUsers(); track user.id) {
+                  <li>{{user.name}}</li>
+                  }
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 mt-3">
+          <button class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

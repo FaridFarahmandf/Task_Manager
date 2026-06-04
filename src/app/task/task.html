@@ -1,0 +1,45 @@
+<div class="container-fluid">
+    <div class="card mt-4">
+        <div class="card-body">
+            <div class="card-title">
+                <h4>
+                    {{task_data().title}}
+                </h4>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <p>Description: {{task_data().description}}</p>
+                </div>
+                <hr>
+                <div class="col-12">
+                    <p>Priority: {{task_data().priority}}</p>
+                </div>
+                <hr>
+                <div class="col-12">
+                    <p>Status: {{task_data().status}}</p>
+                </div>
+                <hr>
+                <div>
+                    <p>Assigned To: </p>
+                    <ul>
+                    @for (user of task_data().assigned_users; track user.id) {
+                        <li>{{user.name}}</li>
+                    }
+                    </ul>
+                </div>
+                <hr>
+                <div>
+                    <p>Created By:</p>
+                    <ul>
+                        <li>{{task_data().creator.name}}</li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-12"><button class="btn btn-primary" (click)="backToList()">Back</button></div>
+            </div>
+        </div>
+    </div>
+</div>

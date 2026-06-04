@@ -1,6 +1,9 @@
+import { UserModel } from './../user/usermodel';
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { catchError, tap, throwError } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +11,10 @@ import { NgForm } from '@angular/forms';
 export class UserService {
   private httpClient = inject(HttpClient);
   url = "http://127.0.0.1:5000";
-
+  users =  signal<UserModel[] | undefined>([]);
+  selectedUsers = signal<UserModel[] | undefined>([])
+  loadedUsers = this.users.asReadonly();
+  loadedSelectedUsers = this.selectedUsers.asReadonly();
 
   register(form:any, route:string) {
     return this.postRequest(route, {
@@ -31,7 +37,42 @@ export class UserService {
       password: enteredPassword
     })
   }
+  UpdateUser(user_id:number,user_data:any) {
+
+    return this.httpClient.put(this.url + "/user/" + user_id, user_data).pipe(
+      catchError((error) => {
+        return throwError(() => new Error("Failed to add user"))
+      }
+      ),
+      tap({
+        next: (value:any) => {
+          this.selectedUsers.set(value.selectedUsers) 
+        }
+      })
+    )
+    
+  }
   postRequest(route:string, obj: any) {
     return this.httpClient.post(this.url+route,obj)
+  }
+
+  loadAllUsers() {
+    return this.getData("/users").pipe(tap({
+        next: (value:any) => {
+          this.users.set(value.users)
+          
+          this.selectedUsers.set(value.selectedUsers)
+  
+          
+        }
+      }))
+  }
+  getData(route:string) {
+    return this.httpClient.get(this.url+route).pipe(
+            catchError((err, obs) => {
+              console.log(err);
+              return throwError(() => new Error("Something wrong is happened") )
+            })
+      )
   }
 }

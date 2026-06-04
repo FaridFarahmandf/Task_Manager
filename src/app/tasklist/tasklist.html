@@ -1,0 +1,44 @@
+<div class="container-fluid">
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-primary" (click)="createTask()">Create Task</button>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col 12">
+            <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (task of tasks(); track task.id) {
+                    <tr>
+                        <th>{{task.id}}</th>
+                        <td>{{task.title}}</td>
+                        <td>
+                            {{task.description.slice(0,20)}}
+                            @if(task.description.length>20) {
+                                ...
+                            }
+                        </td>
+                        <td>{{task.priority}}</td>
+                        <td>{{task.status}}</td>
+                        <td><button class="btn btn-primary" (click)="goToTask(task.id)">Action</button></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
